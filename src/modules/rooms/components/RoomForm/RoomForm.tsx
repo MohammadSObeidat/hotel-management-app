@@ -41,7 +41,7 @@ export default function RoomForm() {
     formState: { errors, isSubmitting },
     handleSubmit,
     setValue
-  } = useForm();
+  } = useForm({defaultValues: {price: ''}});
 
   const onSubmit = async (data: roomData) => {
     const formData = new FormData()
@@ -87,8 +87,8 @@ export default function RoomForm() {
       setValue('capacity', res?.data?.data?.room?.capacity)
       setValue('discount', res?.data?.data?.room?.discount)
       // Correct handling of 'facilities' to store all items
-      const facilitiesArray = res?.data?.data?.room?.facilities.map(item => item.name);
-      setValue('facilities', facilitiesArray);
+      const facilitiesArray = res?.data?.data?.room?.facilities.map(item => item._id);
+      setFacilities(facilitiesArray);
     } catch (error) {
       console.log(error);
     }
@@ -100,9 +100,14 @@ export default function RoomForm() {
   };
 
   useEffect(() => {
-    getFacilities()
-    getRoom()
-  }, [])
+    (async () => {
+
+      await getFacilities()
+      if (roomId) {
+        await getRoom()
+      }
+    })()
+  }, [roomId])
 
   return (
     <>
@@ -126,10 +131,11 @@ export default function RoomForm() {
                             })}/>
                         </Grid>
                         <Grid size={{lg: 6, md: 12, sm: 12, xs: 12}}>
-                          <TextField sx={{width: '100%'}}  label="Price" variant="outlined" 
+                          <TextField sx={{width: '100%'}}  placeholder="Price" label='Price' variant="outlined" 
                             helperText={errors?.price?.message}
                             error={!!errors?.price}
                             type="number"
+                            defaultValue={''}
                             {...register('price', {
                               required: 'Price is required'
                             })}/>
@@ -163,9 +169,9 @@ export default function RoomForm() {
                               multiple
                               helperText={errors?.facilities?.message}
                               // error={!!errors?.room}
-                              {...register('facilities',  {
-                                required: 'Facilities is required'
-                              })}
+                              // {...register('facilities',  {
+                              //   required: 'Facilities is required'
+                              // })}
                               onChange={handleChangeRoom}
                             >
                               {facilitie.map((item: facilitieData, index) => {

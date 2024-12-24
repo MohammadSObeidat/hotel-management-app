@@ -129,7 +129,7 @@ export default function AdsList() {
       getOneAds()
     }
     setOpenCreate(true);
-    reset({name: ''})
+    reset({discount: ''})
     setId(id)
   };
   
@@ -248,14 +248,14 @@ export default function AdsList() {
               <Select
                 labelId="demo-simple-select-error-label"
                 id="demo-simple-select-error"
-                value={room}
+                // value={room}
                 label="Room Name"
                 helperText={errors?.room?.message}
                 // error={!!errors?.room}
                 {...register('room',  {
                   required: 'Room is required'
                 })}
-                onChange={handleChangeRoom}
+                // onChange={handleChangeRoom}
               >
                 {rooms.map((room: roomData) => {
                   return <MenuItem value={room?._id}>{room?.roomNumber}</MenuItem>
@@ -284,17 +284,17 @@ export default function AdsList() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={active}
+                // value={active}
                 label="Active"
                 helperText={errors?.isActive?.message}
                 // error={!!errors?.isActive}
                  {...register('isActive',  {
                   required: 'Active is required'
                 })}
-                onChange={handleChangeActive}
+                // onChange={handleChangeActive}
               >
-                <MenuItem value={true}>true</MenuItem>
-                <MenuItem value={false}>false</MenuItem>
+                <MenuItem value={'true'}>true</MenuItem>
+                <MenuItem value={'false'}>false</MenuItem>
                 {/* <MenuItem value={30}>Thirty</MenuItem> */}
               </Select>
               {errors?.isActive && (
