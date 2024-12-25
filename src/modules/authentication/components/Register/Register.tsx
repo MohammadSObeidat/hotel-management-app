@@ -51,7 +51,7 @@ export default function Register() {
       try {
         const res = await axiosInstanceURL.post(USERS_URL.REGISTER, formData)
         console.log(res);
-        navigate('/login')
+        navigate('/auth/login')
         toast.success(res?.data?.message)
       } catch (error: any) {
         toast.error(error?.response?.data?.message)
@@ -85,7 +85,7 @@ export default function Register() {
                 <Box component="section" sx={{p: 5}}>
                   <Typography variant="h5" className='form-title'>Sign up</Typography>
                   <Typography variant="body1" className='form-info'>If you already have an account register</Typography>
-                  <Typography variant="body1" className='form-info'>You can  <Link to={'/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
+                  <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
                   <Box component="section" sx={{pt: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <Grid container spacing={1}>

@@ -30,7 +30,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import DeletedConfirmation from '../../../shared/components/DeletedConfirmation/DeletedConfirmation';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -91,12 +91,12 @@ export default function AdsList() {
   const [ads, setAds] = useState([])
   const [rooms, setRooms] = useState([])
   const [load, setLoad] = useState(true)
-  const [activeMenuId, setActiveMenuId] = useState<number | null>(null);
+  const [activeMenuId, setActiveMenuId] = useState(null);
   const [open, setOpen] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   const [id, setId] = useState(0)
-  const [room, setRoom] = useState('');
-  const [active, setActive] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [oneAds, setOneAds] = useState<boolean | null>(null)
 
   const {
     register,
@@ -115,21 +115,30 @@ export default function AdsList() {
   };
 
   const handleClickOpenCreate = (id: number) => {
+    setIsLoading(true);
     if (id !== 0) {
       const getOneAds = async () => {
         try {
           const res = await axiosInstance.get(ADS_URL.GET_ONE_ADS(id))
           console.log(res);
-          setValue('discount', res?.data?.data?.ads?.room?.discount)
-          setValue('isActive', res?.data?.data?.ads?.isActive)
+          const adsRes = res?.data?.data?.ads 
+          setOneAds(adsRes)
+          setValue('discount', adsRes?.room?.discount)
+          // setValue('isActive', adsRes?.isActive ? 'true' : 'false')
         } catch (error) {
           console.log(error);
+        } finally {
+          // Ensure loading is turned off after the request completes
+          setIsLoading(false);
         }
       }
       getOneAds()
+    } else {
+      // Handle the case when id is 0
+      setIsLoading(false);
     }
     setOpenCreate(true);
-    reset({discount: ''})
+    reset({discount: '', isActive: ''})
     setId(id)
   };
   
@@ -154,8 +163,6 @@ export default function AdsList() {
       const res = await axiosInstance.get(ROOMS_URL.GET_ROOMS)
       console.log(res);
       setRooms(res?.data?.data?.rooms)
-      // setRoomsCount(res?.data?.data?.totalCount)
-      setLoad(false)
     } catch (error) {
       console.log(error);
     }
@@ -187,18 +194,12 @@ export default function AdsList() {
     }
   }
 
-  const handleChangeRoom = (event: SelectChangeEvent) => {
-    setRoom(event.target.value as string);
-  };
-
-  const handleChangeActive = (event: SelectChangeEvent) => {
-    setActive(event.target.value as string);
-  };
-
   useEffect(() => {
     getAds()
     getRooms()
   }, [])
+
+  if (isLoading) return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}><ThreeDot color="#3f31cc" size="medium" text="" textColor="#NaNNaNNaN" /></div>;
 
   return (
     <>
@@ -227,7 +228,7 @@ export default function AdsList() {
       >
         <form onSubmit={handleSubmit(createAds)}>
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-        {id===0 ?'Add Ads' : 'Edit Ads'}
+          {id===0 ?'Add Ads' : 'Edit Ads'}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -272,7 +273,6 @@ export default function AdsList() {
               helperText={errors?.discount?.message}
               error={!!errors?.discount}
               type="text"
-              // focused={id === 0 ? true : true}
               {...register('discount',  {
                 required: 'Discount is required'
               })} />
@@ -284,7 +284,7 @@ export default function AdsList() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                // value={active}
+                defaultValue={oneAds?.isActive} //Set default active value (true/false)
                 label="Active"
                 helperText={errors?.isActive?.message}
                 // error={!!errors?.isActive}
@@ -295,7 +295,6 @@ export default function AdsList() {
               >
                 <MenuItem value={'true'}>true</MenuItem>
                 <MenuItem value={'false'}>false</MenuItem>
-                {/* <MenuItem value={30}>Thirty</MenuItem> */}
               </Select>
               {errors?.isActive && (
                 <FormHelperText sx={{ color: 'red' }}>{String(errors?.isActive?.message)}</FormHelperText>

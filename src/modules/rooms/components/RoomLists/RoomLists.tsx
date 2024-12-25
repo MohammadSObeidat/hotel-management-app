@@ -147,7 +147,7 @@ export default function RoomLists() {
                   <StyledTableCell component="th" scope="row">
                     {room?.roomNumber}
                   </StyledTableCell>
-                  <StyledTableCell align="center"><img style={{minWidth: '50px', maxWidth: '50px', minHeight: '50px', maxHeight: '50px', borderRadius: '8px'}} src={room?.images} alt="" /></StyledTableCell>
+                  <StyledTableCell align="center"><img style={{minWidth: '70px', maxWidth: '70px', minHeight: '50px', maxHeight: '50px', borderRadius: '8px'}} src={room?.images} alt="" /></StyledTableCell>
                   <StyledTableCell align="center">{room?.price}</StyledTableCell>
                   <StyledTableCell align="center">{room?.discount}</StyledTableCell>
                   <StyledTableCell align="center">{room?.capacity}</StyledTableCell>

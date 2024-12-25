@@ -38,7 +38,7 @@ export default function ResetPassword() {
         const res = await axiosInstanceURL.post(USERS_URL.RESET_PASSWORD, data)
         console.log(res);
         toast.success(res?.data?.message)
-        navigate('/login')
+        navigate('/auth/login')
       } catch (error: any) {
         toast.error(error?.response?.data?.message)
       }
@@ -71,7 +71,7 @@ export default function ResetPassword() {
                 <Box component="section" sx={{p: 5}}>
                   <Typography variant="h5" className='form-title'>Reset Password</Typography>
                   <Typography variant="body1" className='form-info'>If you already have an account register</Typography>
-                  <Typography variant="body1" className='form-info'>You can  <Link to={'/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
+                  <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
                   <Box component="section" sx={{pt: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <Grid container spacing={2}>

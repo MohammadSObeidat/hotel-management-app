@@ -14,6 +14,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import fileImg from '../../../../assets/images/v2.png'
+import { ThreeDot } from 'react-loading-indicators';
 
 interface roomData {
   roomNumber: string,
@@ -35,13 +36,15 @@ export default function RoomForm() {
   const id = String(roomId)
   const navigate = useNavigate()
   const [facilitie, setFacilitie] = useState([])
-  const [facilities, setFacilities] = useState([]);
+  const [facilities, setFacilities] = useState<string | []>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
     setValue
-  } = useForm({defaultValues: {price: ''}});
+  } = useForm();
 
   const onSubmit = async (data: roomData) => {
     const formData = new FormData()
@@ -87,7 +90,8 @@ export default function RoomForm() {
       setValue('capacity', res?.data?.data?.room?.capacity)
       setValue('discount', res?.data?.data?.room?.discount)
       // Correct handling of 'facilities' to store all items
-      const facilitiesArray = res?.data?.data?.room?.facilities.map(item => item._id);
+      const facilitiesArray = res?.data?.data?.room?.facilities.map((item: facilitieData) => item._id);
+      // setValue('facilities', facilitiesArray);
       setFacilities(facilitiesArray);
     } catch (error) {
       console.log(error);
@@ -101,13 +105,16 @@ export default function RoomForm() {
 
   useEffect(() => {
     (async () => {
-
+      setIsLoading(true);
       await getFacilities()
       if (roomId) {
         await getRoom()
       }
+      setIsLoading(false);
     })()
   }, [roomId])
+
+  if (isLoading) return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}><ThreeDot color="#3f31cc" size="medium" text="" textColor="#NaNNaNNaN" /></div>;
 
   return (
     <>
@@ -131,11 +138,10 @@ export default function RoomForm() {
                             })}/>
                         </Grid>
                         <Grid size={{lg: 6, md: 12, sm: 12, xs: 12}}>
-                          <TextField sx={{width: '100%'}}  placeholder="Price" label='Price' variant="outlined" 
+                          <TextField sx={{width: '100%'}}  label="Price" variant="outlined" 
                             helperText={errors?.price?.message}
                             error={!!errors?.price}
                             type="number"
-                            defaultValue={''}
                             {...register('price', {
                               required: 'Price is required'
                             })}/>
@@ -168,10 +174,11 @@ export default function RoomForm() {
                               label="facilities"
                               multiple
                               helperText={errors?.facilities?.message}
-                              // error={!!errors?.room}
-                              // {...register('facilities',  {
-                              //   required: 'Facilities is required'
-                              // })}
+                              // React hook Form or useState() 'value, onChange'
+                              error={!!errors?.room}
+                              {...register('facilities',  {
+                                required: 'Facilities is required'
+                              })}
                               onChange={handleChangeRoom}
                             >
                               {facilitie.map((item: facilitieData, index) => {

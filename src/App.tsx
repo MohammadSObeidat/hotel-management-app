@@ -21,15 +21,15 @@ import ProtectedRoute from './modules/shared/components/ProtectedRoute/Protected
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/auth',
       element: <AuthLayout/>,
       errorElement: <NotFound/>,
       children: [
         {index: true, element: <Login/>},
-        {path: 'login', element: <Login/>},
-        {path: 'register', element: <Register/>},
-        {path: 'forgot-password', element: <ForgotPassword/>},
-        {path: 'reset-password', element: <ResetPassword/>}
+        {path: '/auth/login', element: <Login/>},
+        {path: '/auth/register', element: <Register/>},
+        {path: '/auth/forgot-password', element: <ForgotPassword/>},
+        {path: '/auth/reset-password', element: <ResetPassword/>}
       ]
     },
     {

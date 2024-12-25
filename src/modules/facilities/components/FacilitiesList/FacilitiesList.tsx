@@ -75,6 +75,7 @@ export default function FacilitiesList() {
   const [open, setOpen] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
   const [id, setId] = useState(0)
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -93,6 +94,7 @@ export default function FacilitiesList() {
   };
 
   const handleClickOpenCreate = (id: number) => {
+    setIsLoading(true);
     if (id !== 0) {
       const getFacility = async () => {
         try {
@@ -102,9 +104,16 @@ export default function FacilitiesList() {
           setValue('name', res?.data?.data?.facility?.name)
         } catch (error) {
           console.log(error);
+        } finally {
+          // Ensure loading is turned off after the request completes
+          setIsLoading(false);
         }
       }
       getFacility()
+      // setIsLoading(false);
+    } else {
+      // Handle the case when id is 0
+      setIsLoading(false);
     }
     setOpenCreate(true);
     reset({name: ''})
@@ -155,6 +164,8 @@ export default function FacilitiesList() {
   useEffect(() => {
     getFacilities()
   }, [])
+
+  if (isLoading) return <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}><ThreeDot color="#3f31cc" size="medium" text="" textColor="#NaNNaNNaN" /></div>;
 
   return (
     <>

@@ -63,7 +63,7 @@ export default function Login() {
                 <Box component="section" sx={{p: 5}}>
                   <Typography variant="h5" className='form-title'>Sign in</Typography>
                   <Typography variant="body1" className='form-info'>If you don’t have an account register</Typography>
-                  <Typography variant="body1" className='form-info'>You can  <Link to={'/register'} style={{textDecoration: 'none', color: '#000', fontWeight: 'bold'}}>Register here !</Link></Typography>
+                  <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/register'} style={{textDecoration: 'none', color: '#000', fontWeight: 'bold'}}>Register here !</Link></Typography>
                   <Box component="section" sx={{pt: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <Grid container spacing={2}>
@@ -93,7 +93,7 @@ export default function Login() {
                               </Button>}
                           </Box>
                         </Grid>
-                        <Link to={'/forgot-password'} style={{width: '100%', textDecoration: 'none', color: '#000', textAlign: 'end'}}>Forgot Password ?</Link>
+                        <Link to={'/auth/forgot-password'} style={{width: '100%', textDecoration: 'none', color: '#000', textAlign: 'end'}}>Forgot Password ?</Link>
                         <Button type="submit" variant="contained" sx={{width: '100%'}} disabled={isSubmitting}>
                           {isSubmitting && <span className="spinner-border spinner-border-sm mr-1 mx-1"></span>}
                           Login

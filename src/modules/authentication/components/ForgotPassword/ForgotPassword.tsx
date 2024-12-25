@@ -28,8 +28,8 @@ export default function ForgotPassword() {
       try {
         const res = await axiosInstanceURL.post(USERS_URL.FORGOT_PASSWORD, data)
         console.log(res);
+        navigate('/auth/reset-password', {state: {email: data?.email}})
         toast.success(res?.data?.data?.message)
-        navigate('/reset-password', {state: {email: data?.email}})
       } catch (error: any) {
         toast.error(error?.response?.data?.message)
       }
@@ -46,7 +46,7 @@ export default function ForgotPassword() {
                 <Box component="section" sx={{p: 5}}>
                   <Typography variant="h5" className='form-title'>Forgot password</Typography>
                   <Typography variant="body1" className='form-info'>If you already have an account register</Typography>
-                  <Typography variant="body1" className='form-info'>You can  <Link to={'/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
+                  <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
                   <Box component="section" sx={{pt: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <Grid container spacing={2}>

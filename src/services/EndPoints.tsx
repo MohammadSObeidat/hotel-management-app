@@ -23,7 +23,8 @@ export const USERS_URL = {
     RESET_PASSWORD: `/admin/users/reset-password`,
     REGISTER: `/portal/users`,
     GET_USER_PROFILE: (id: string) => `/admin/users/${id}`,
-    GET_USERS: `/admin/users`
+    GET_USERS: `/admin/users`,
+    CHANGE_PASSWORD: `/admin/users/change-password`
 }
 
 // Room Endpoints 
