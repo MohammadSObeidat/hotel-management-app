@@ -59,3 +59,8 @@ export const BOOKING_URL = {
     GET_BOOKING: `/admin/booking`,
     DETAILS_BOOKING: (id: number) => `/admin/booking/${id}`
 }
+
+// Dashboard Endpoint
+export const DASHBOARD_URL = {
+    CHART: `/admin/dashboard`
+}

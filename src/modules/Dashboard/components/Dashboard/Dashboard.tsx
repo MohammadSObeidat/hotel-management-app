@@ -5,49 +5,37 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
 import { useEffect, useState } from 'react';
-import { ADS_URL, axiosInstance, FACILITIES_URL, ROOMS_URL } from '../../../../services/EndPoints';
+import { axiosInstance, DASHBOARD_URL } from '../../../../services/EndPoints';
 import PieChartComponent from '../../../shared/components/Chart/Chart';
 
 export default function Dashboard() {
-  const [rooms, setRooms] = useState(null)
-  const [facilities, setFacilities] = useState(null)
-  const [ads, setAds] = useState(null)
-  
-  
-  const getRooms = async () => {
-    try {
-      const res = await axiosInstance.get(ROOMS_URL.GET_ROOMS)
-      console.log(res);
-      setRooms(res?.data?.data?.totalCount)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const [rooms, setRooms] = useState(0)
+  const [facilities, setFacilities] = useState(0)
+  const [ads, setAds] = useState(0)
+  const [pending, setPending] = useState(0)
+  const [completed, setCompleted] = useState(0)
+  const [user, setUser] = useState(0)
+  const [admin, setAdmin] = useState(0)
 
-  const getFacilities = async () => {
+  const getChart = async () => {
     try {
-      const res = await axiosInstance.get(FACILITIES_URL.GET_FACILITIES)
+      const res = await axiosInstance.get(DASHBOARD_URL.CHART)
       console.log(res);
-      setFacilities(res?.data?.data?.totalCount)
+      setRooms(res?.data?.data?.rooms)
+      setFacilities(res?.data?.data?.facilities)
+      setAds(res?.data?.data?.ads)
+      setPending(res?.data?.data?.bookings?.pending)
+      setCompleted(res?.data?.data?.bookings?.completed)
+      setUser(res?.data?.data?.users?.user)
+      setAdmin(res?.data?.data?.users?.admin)
     } catch (error) {
       console.log(error);
     }
   }
-
-  const getAds = async () => {
-    try {
-      const res = await axiosInstance.get(ADS_URL.GET_ADS)
-      console.log(res);
-      setAds(res?.data?.data?.totalCount)
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  
 
   useEffect(() => {
-    getRooms()
-    getFacilities()
-    getAds()
+    getChart()
   }, [])
 
   return (
@@ -93,8 +81,9 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </Box>
-      <Box sx={{width: '600px'}}>
-        <PieChartComponent one={rooms} tow={facilities} three={ads} colorOne={'rgba(54, 162, 235, 0.2)'} colorTow={'rgba(255, 99, 132, 0.2)'} colorThree={'rgba(75, 192, 192, 0.2)'}/>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+        <PieChartComponent one={pending} tow={completed} colorOne={'rgba(54, 162, 235, 0.2)'} colorTow={'rgba(255, 99, 132, 0.2)'} nameOne={'pending'} nameTwo={'completed'}/>
+        <PieChartComponent one={user} tow={admin} colorOne={'rgba(54, 162, 235, 0.2)'} colorTow={'rgba(255, 99, 132, 0.2)'} nameOne={'user'} nameTwo={'admin'}/>
       </Box>
     </Box>
   )

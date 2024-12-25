@@ -13,31 +13,31 @@ ChartJS.register(ArcElement, Tooltip, Legend, Title);
 interface Props {
   one: number | null,
   tow: number | null,
-  three: number | null,
   colorOne: string,
   colorTow: string,
-  colorThree: string
+  nameOne: string,
+  nameTwo: string
 }
 
-const PieChartComponent = ({one, tow, three, colorOne, colorTow, colorThree}: Props) => {
+const PieChartComponent = ({one, tow, colorOne, colorTow, nameOne, nameTwo}: Props) => {
   // Data for the Pie chart
   const data = {
-    labels: ['Rooms', 'Facilities', 'Ads'], // Labels for the pie slices
+    labels: [nameOne, nameTwo], // Labels for the pie slices
     datasets: [
       {
         label: 'Dataset 1', // Label for the dataset
-        data: [one, tow, three], // Data points for each slice of the pie
+        data: [one, tow], // Data points for each slice of the pie
         backgroundColor: [
             colorTow,  // Red
         //   'rgba(255, 159, 64, 0.2)',   // Orange
-          'rgba(75, 192, 192, 0.2)',   // Green
+          // 'rgba(75, 192, 192, 0.2)',   // Green
         colorOne,   // Blue
         // colorTow,   // Yellow
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',  // Red
         //   'rgba(255, 159, 64, 1)',   // Orange
-          'rgba(75, 192, 192, 1)',   // Green
+          // 'rgba(75, 192, 192, 1)',   // Green
           'rgba(54, 162, 235, 1)',   // Blue
         //   'rgba(255, 205, 86, 1)',   // Yellow
 
