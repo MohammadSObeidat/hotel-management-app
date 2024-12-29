@@ -1,0 +1,49 @@
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.items .item {
+    position: relative;
+    cursor: pointer;
+}
+.items .item img {
+    border-radius: 15px;
+}
+.items .item:first-child {
+    grid-column: 1/2;
+    grid-row: 1/3;
+}
+.items .item .icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+.items .item .bg {
+    position: absolute;
+    top: 0;
+    background-color: #203FC736;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+.items .item:hover .icons, .items .item:hover .bg {
+    opacity: 1;
+    visibility: visible;
+}
+.items .item .price {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background-color: #FF498B;
+    border-radius: 0 15px 0 15px;
+    padding: 5px 20px;
+    color: #fff;
+}

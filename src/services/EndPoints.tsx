@@ -16,6 +16,8 @@ axiosInstance.interceptors.request.use((config) => {
     return config;
 });
 
+// =============== Admin Portal ====================
+
 // User Endpoints
 export const USERS_URL = {
     LOGIN: `/admin/users/login`,
@@ -63,4 +65,23 @@ export const BOOKING_URL = {
 // Dashboard Endpoint
 export const DASHBOARD_URL = {
     CHART: `/admin/dashboard`
+}
+
+// =============== User Portal ===================
+
+export const ROOM_URL_USER = {
+    GET_ROOMS: `/portal/rooms/available`,
+    GET_ROOM: (id: string | undefined) => `/portal/rooms/${id}`,
+    CREATE_COMMENT: `/portal/room-comments`,
+    RATE_ROOM: `/portal/room-reviews`
+}
+
+export const FAVORITE_ROOMS = {
+    GET_FAVORITE_ROOMS: `/portal/favorite-rooms`,
+    ADD_TO_FAVORITE: `/portal/favorite-rooms`,
+    REMOVE_FAVORITE: (id: string) => `/portal/favorite-rooms/${id}`
+}
+
+export const ADS_URL_USER = {
+    GET_ADS: `/portal/ads`,
 }

@@ -1,0 +1,21 @@
+.static-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+.static-items .static-item {
+    position: relative;
+    cursor: pointer;
+}
+.static-items .static-item img {
+    border-radius: 15px;
+}
+.static-items .static-item .price {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background-color: #FF498B;
+    border-radius: 0 15px 0 15px;
+    padding: 5px 20px;
+    color: #fff;
+}

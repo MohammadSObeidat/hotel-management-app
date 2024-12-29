@@ -17,6 +17,11 @@ import UsersList from './modules/users/components/UsersList/UsersList';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ProtectedRoute from './modules/shared/components/ProtectedRoute/ProtectedRoute';
+import UserLayout from './modules/shared/components/UserLayout/UserLayout';
+import HomePage from './modules/homePage/components/HomePage/HomePage';
+import Explore from './modules/explore/components/Explore';
+import DetailsPage from './modules/detailsPage/components/DetailsPage/DetailsPage';
+import Favorites from './modules/shared/components/favorites/components/Favorites/Favorites';
 
 function App() {
   const router = createBrowserRouter([
@@ -30,6 +35,18 @@ function App() {
         {path: '/auth/register', element: <Register/>},
         {path: '/auth/forgot-password', element: <ForgotPassword/>},
         {path: '/auth/reset-password', element: <ResetPassword/>}
+      ]
+    },
+    {
+      path: '/',
+      element: <UserLayout/>,
+      errorElement: <NotFound/>,
+      children: [
+        {index: true, element: <HomePage/>},
+        {path: 'home', element: <HomePage/>},
+        {path: 'explore-all-rooms', element: <Explore/>},
+        {path: 'details-page/:roomId', element: <DetailsPage/>},
+        {path: 'favorites', element: <Favorites/>}
       ]
     },
     {

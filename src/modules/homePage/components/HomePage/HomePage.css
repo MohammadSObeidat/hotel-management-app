@@ -1,0 +1,23 @@
+.link {
+    text-decoration: none;
+    font-family: Poppins;
+    font-weight: 400;
+    font-size: 16px;
+    margin-inline: 20px;
+    color: #000;
+}
+.link.active {
+    color: #3252DF;
+}
+.link-auth {
+    text-decoration: none;
+    font-family: Poppins;
+    font-weight: 500;
+    font-size: 16px;
+    margin-inline: 20px;
+    background-color: #3252DF;
+    box-shadow: 0 8px 15px 0 #3252DF4D;
+    color: #FFFFFF;
+    padding: 10px 35px;
+    border-radius: 4px;
+}

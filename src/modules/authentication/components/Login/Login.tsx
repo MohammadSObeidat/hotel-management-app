@@ -35,10 +35,11 @@ export default function Login() {
       const res = await axiosInstanceURL.post(USERS_URL.LOGIN, data)
       console.log(res);
       const token = res?.data?.data?.token
+      const isUser = res?.data?.data?.user?.role
       localStorage.setItem('token', token)
       saveLoginData()
       toast.success(res?.data?.message)
-      navigate('/dashboard')
+      navigate(isUser === 'user' ? '/' : '/dashboard')
     } catch (error: any) {
       toast.error(error?.response?.data?.message)
     }

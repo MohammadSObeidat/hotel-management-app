@@ -1,0 +1,45 @@
+.rooms {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+.rooms .room {
+    position: relative;
+    cursor: pointer;
+}
+.rooms .room img {
+    border-radius: 15px;
+}
+.rooms .room .icons {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+.rooms .room .bg-color {
+    position: absolute;
+    top: 0;
+    background-color: #203FC736;
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+}
+.rooms .room:hover .icons, .rooms .room:hover .bg-color {
+    opacity: 1;
+    visibility: visible;
+}
+.rooms .room .price {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    background-color: #FF498B;
+    border-radius: 0 15px 0 15px;
+    padding: 5px 20px;
+    color: #fff;
+}
