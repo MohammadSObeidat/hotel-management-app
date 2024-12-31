@@ -85,3 +85,8 @@ export const FAVORITE_ROOMS = {
 export const ADS_URL_USER = {
     GET_ADS: `/portal/ads`,
 }
+
+export const BOOKING_URL_USER = {
+    CREATE_BOOKING: `/portal/booking`,
+    PAY_BOOKING: (id: string) => `/portal/booking/${id}/pay`
+}

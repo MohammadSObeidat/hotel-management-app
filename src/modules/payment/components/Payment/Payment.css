@@ -1,0 +1,9 @@
+.form-wrapper {
+    background-color: #f1f5f9;
+}
+.form-wrapper .card {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 20px;
+}

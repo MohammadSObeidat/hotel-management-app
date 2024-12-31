@@ -22,6 +22,14 @@ import HomePage from './modules/homePage/components/HomePage/HomePage';
 import Explore from './modules/explore/components/Explore';
 import DetailsPage from './modules/detailsPage/components/DetailsPage/DetailsPage';
 import Favorites from './modules/shared/components/favorites/components/Favorites/Favorites';
+import Payment from './modules/payment/components/Payment/Payment';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+import PaymentDone from './modules/paymentDone/components/PaymentDone/PaymentDone';
+import ProtectedRouteIsUser from './modules/shared/components/ProtectedRouteIsUser/ProtectedRouteIsUser';
+
+const stripePromise = loadStripe('pk_test_51OTjURBQWp069pqTmqhKZHNNd3kMf9TTynJtLJQIJDOSYcGM7xz3DabzCzE7bTxvuYMY0IX96OHBjsysHEKIrwCK006Mu7mKw8');
+
 
 function App() {
   const router = createBrowserRouter([
@@ -46,7 +54,9 @@ function App() {
         {path: 'home', element: <HomePage/>},
         {path: 'explore-all-rooms', element: <Explore/>},
         {path: 'details-page/:roomId', element: <DetailsPage/>},
-        {path: 'favorites', element: <Favorites/>}
+        {path: 'favorites', element: <ProtectedRouteIsUser><Favorites/></ProtectedRouteIsUser>},
+        {path: 'payment', element: <Elements stripe={stripePromise}> <ProtectedRouteIsUser><Payment/></ProtectedRouteIsUser> </Elements>},
+        {path: 'payment-done', element: <ProtectedRouteIsUser><PaymentDone/></ProtectedRouteIsUser>}
       ]
     },
     {

@@ -15,6 +15,8 @@
     "@fortawesome/fontawesome-free": "^6.7.1",
     "@mui/icons-material": "^6.2.1",
     "@mui/material": "^6.2.1",
+    "@stripe/react-stripe-js": "^3.1.1",
+    "@stripe/stripe-js": "^5.4.0",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",

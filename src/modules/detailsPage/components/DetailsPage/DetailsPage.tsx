@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useEffect, useState } from 'react';
-import { axiosInstance, ROOM_URL_USER } from '../../../../services/EndPoints';
+import { axiosInstance, BOOKING_URL_USER, ROOM_URL_USER } from '../../../../services/EndPoints';
 import img2 from '../../../../assets/images/Screenshot 2024-12-26 194154.png'
 import { useForm } from 'react-hook-form';
 import Button from '@mui/material/Button';
@@ -25,17 +25,29 @@ interface rateData {
   review: string
 }
 
+interface bookingData {
+  startDate: string,
+  endDate: string,
+  room: string,
+  totalPrice: number,
+}
+
+interface roomData {
+  price: string,
+  discount: string
+}
+
 export default function DetailsPage() {
   const {userData} = UseAuthContext()
   console.log(userData);
   
-  const [room, setRoom] = useState(null)
+  const [room, setRoom] = useState<roomData | null>(null)
   const {roomId} = useParams()
   const [value, setValue] = useState<number | null>(2);
   const navigate = useNavigate()
-  const {register, handleSubmit,} = useForm({defaultValues: {roomId: roomId}});
-  const { register: registerRate, handleSubmit: handleRateSubmit, setValue: setValueRate  } = useForm({defaultValues: {roomId: roomId}});
-  const { register: registerComment, handleSubmit: handleCommentSubmit } = useForm({defaultValues: {roomId: roomId}});
+  const {register: registerPayment, formState: {isSubmitting}, handleSubmit: handlePaymentSubmit, setValue: setValuePayment} = useForm({defaultValues: {room: roomId}});
+  const { register: registerRate, formState: {isSubmitting: isSubmittingRate}, handleSubmit: handleRateSubmit, setValue: setValueRate  } = useForm({defaultValues: {roomId: roomId}});
+  const { register: registerComment, formState: {isSubmitting: isSubmittingComment}, handleSubmit: handleCommentSubmit } = useForm({defaultValues: {roomId: roomId}});
 
   const getRoom = async () => {
     try {
@@ -43,6 +55,19 @@ export default function DetailsPage() {
       console.log(res);
       
       setRoom(res?.data?.data?.room)
+      setValuePayment('totalPrice', res?.data?.data?.room?.price)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const createBooking = async (data: bookingData) => {
+    try {
+      const res = await axiosInstance.post(BOOKING_URL_USER.CREATE_BOOKING, data)
+      console.log(res);
+      const id = res?.data?.data?.booking?._id
+      navigate('/payment', {state: {id: id}})
+      toast.success(res?.data?.message)
     } catch (error) {
       console.log(error);
     }
@@ -130,16 +155,23 @@ export default function DetailsPage() {
                     <Typography variant='h4' sx={{fontFamily: 'Poppins', fontWeight: 500, fontSize: '36px', color: '#B0B0B0' }}><span style={{color: '#1ABC9C'}}>${room?.price}</span> per night</Typography>
                     <Typography variant='body1' sx={{fontFamily: 'Poppins', fontWeight: 400, fontSize: '16px', color: '#FF1612' }}>Discount {room?.discount}% Off </Typography>
                     <Box sx={{paddingTop: '70px'}}>
-                        <form>
+                        <form onSubmit={handlePaymentSubmit(createBooking)}>
                             <Typography sx={{fontFamily: 'Poppins', fontWeight: 400, fontSize: '16px', color: '#152C5B'}} variant="body1" component="h2">Pick a Date</Typography>
                             <Box className="box" sx={{display: 'flex'}}>
                             <img src={img2} alt="" />
                             <Box className="inputs">
-                                <input type="date" {...register('startDate')}/>-
-                                <input type="date" {...register('endDate')}/>
+                              <TextField sx={{width: '100%', display: 'none'}} id="outlined-basic" label="Message" variant="outlined" 
+                                    {...registerPayment('room')}/>
+                                <input type="date" {...registerPayment('startDate')}/>-
+                                <input type="date" {...registerPayment('endDate')}/>
+                                <TextField sx={{width: '100%', display: 'none'}} id="outlined-basic" label="Message" variant="outlined" 
+                                    {...registerPayment('totalPrice')} defaultValue={2000}/>
                             </Box>
                             </Box>
-                            <Button type='submit' sx={{paddingInline: 8, marginTop: 5}} variant="contained">Continue Book </Button>
+                            <Button type='submit' sx={{paddingInline: 8, marginTop: 5}} variant="contained" disabled={isSubmitting}>
+                              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1 mx-1"></span>}
+                              Continue Book 
+                            </Button>
                         </form>
                     </Box>
                 </Box>
@@ -167,7 +199,10 @@ export default function DetailsPage() {
                                     <TextField sx={{width: '100%'}} multiline  rows={4} id="outlined-basic" label="Message" variant="outlined" 
                                     {...registerRate('review')}/>
                                 </Box>
-                                <Button type='submit' sx={{paddingInline: 8, marginTop: 3}} variant="contained">Rate</Button>
+                                <Button type='submit' sx={{paddingInline: 8, marginTop: 3}} variant="contained" disabled={isSubmittingRate}>
+                                  {isSubmittingRate && <span className="spinner-border spinner-border-sm mr-1 mx-1"></span>}
+                                  Rate
+                                </Button>
                             </form>
                         </Box>  
                     </Grid>
@@ -182,7 +217,10 @@ export default function DetailsPage() {
                                     <TextField sx={{width: '100%'}} multiline  rows={4} id="outlined-basic" label="Add Your Comment" variant="outlined" 
                                     {...registerComment('comment')}/>
                                 </Box>
-                                <Button type='submit' sx={{paddingInline: 8, marginTop: 5}} variant="contained">Send</Button>
+                                <Button type='submit' sx={{paddingInline: 8, marginTop: 5}} variant="contained" disabled={isSubmittingComment}>
+                                  {isSubmittingComment && <span className="spinner-border spinner-border-sm mr-1 mx-1"></span>}
+                                  Send
+                                </Button>
                             </form>
                         </Box>
                     </Grid>

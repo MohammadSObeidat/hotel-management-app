@@ -14,7 +14,8 @@ interface userData {
     userName: string,
     email: string,
     country: string,
-    profileImage: string
+    profileImage: string,
+    role: string
 }
 
 interface AuthContextType {
