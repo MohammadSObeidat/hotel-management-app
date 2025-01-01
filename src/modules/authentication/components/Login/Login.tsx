@@ -61,7 +61,7 @@ export default function Login() {
             <Grid container spacing={2} >
               <Grid size={{ lg: 6, md: 6, sm: 6,  xs: 12 }}>
                 <Typography variant="h5" component="h2" className='title'><Typography className='title' variant="h5" component="h2" sx={{color:'#3252DF'}}>Stay</Typography>cation</Typography>
-                <Box component="section" sx={{p: 5}}>
+                <Box component="section" sx={{p: {lg: 5, md: 5, sm: 5, xs: 1}}}>
                   <Typography variant="h5" className='form-title'>Sign in</Typography>
                   <Typography variant="body1" className='form-info'>If you don’t have an account register</Typography>
                   <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/register'} style={{textDecoration: 'none', color: '#000', fontWeight: 'bold'}}>Register here !</Link></Typography>

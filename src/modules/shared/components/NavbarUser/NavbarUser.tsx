@@ -125,8 +125,14 @@ export default function NavbarUser() {
                   </Box>
                 </MenuItem>
               </> : <>
-                      <Link to={'/auth/register'} className='link-auth'>Register</Link>
-                      <Link to={'/auth/login'} className='link-auth'>Login Now</Link>
+                      <Box sx={{display: {xs: 'block'},marginBlock: {xs: '25px'}, marginInline:{xs: '10px'}}}>
+                        <Link to={'/auth/register'} className='link-auth'>Register</Link>
+                        {/* <Link to={'/auth/login'} className='link-auth'>Login Now</Link> */}
+                      </Box>
+                      <Box sx={{display: {xs: 'block'},marginBlock: {xs: '25px'}, marginInline:{xs: '10px'}}}>
+                        {/* <Link to={'/auth/register'} className='link-auth'>Register</Link> */}
+                        <Link to={'/auth/login'} className='link-auth'>Login Now</Link>
+                      </Box>
                     </>
             }
             </Menu>

@@ -36,9 +36,9 @@ export default function Hero() {
                   <Typography sx={{fontFamily: 'Poppins', fontWeight: 500, fontSize: '20px', color: '#152C5B'}} variant="body1" component="h2">Start Booking</Typography>
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <Typography sx={{fontFamily: 'Poppins', fontWeight: 400, fontSize: '16px', color: '#152C5B'}} variant="body1" component="h2">Pick a Date</Typography>
-                    <Box className="box" sx={{display: 'flex'}}>
+                    <Box className="box" sx={{display: 'flex', width: {xs: '50px'}}}>
                       <img src={img2} alt="" />
-                      <Box className="inputs">
+                      <Box className="inputs" sx={{p: {xs: 5}}}>
                         <input type="date" {...register('startDate')}/>-
                         <input type="date" {...register('endDate')}/>
                       </Box>

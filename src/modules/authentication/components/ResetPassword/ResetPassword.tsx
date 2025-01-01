@@ -68,7 +68,7 @@ export default function ResetPassword() {
             <Grid container spacing={2} >
               <Grid size={{ lg: 6, md: 6, sm: 6,  xs: 12 }}>
                 <Typography variant="h5" component="h2" className='title'><Typography className='title' variant="h5" component="h2" sx={{color:'#3252DF'}}>Stay</Typography>cation</Typography>
-                <Box component="section" sx={{p: 5}}>
+                <Box component="section" sx={{p: {lg: 5, md: 5, sm: 5, xs: 1}}}>
                   <Typography variant="h5" className='form-title'>Reset Password</Typography>
                   <Typography variant="body1" className='form-info'>If you already have an account register</Typography>
                   <Typography variant="body1" className='form-info'>You can  <Link to={'/auth/login'} style={{textDecoration: 'none', color: '#ff5722',fontWeight: 'bold'}}>Login here !</Link></Typography>
