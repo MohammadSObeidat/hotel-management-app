@@ -66,7 +66,7 @@ const PieChartComponent = ({one, tow, colorOne, colorTow, nameOne, nameTwo}: Pro
   };
 
   return (
-    <div className='w-75 mt-5'>
+    <div style={{width: '400px'}} className='mt-5'>
       <Pie data={data} options={config.options} />
     </div>
   );
