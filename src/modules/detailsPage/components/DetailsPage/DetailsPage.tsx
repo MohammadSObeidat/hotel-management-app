@@ -62,6 +62,11 @@ export default function DetailsPage() {
   }
 
   const createBooking = async (data: bookingData) => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      navigate('/auth/login')
+      return
+    }
     try {
       const res = await axiosInstance.post(BOOKING_URL_USER.CREATE_BOOKING, data)
       console.log(res);
